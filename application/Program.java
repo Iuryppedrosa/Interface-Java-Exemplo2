@@ -7,16 +7,12 @@ import problema2.service.OnlinePaymentService;
 import problema2.service.PaypalService;
 
 import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Scanner;
 
 public class Program {
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         System.out.println("Entre os dados do contrato:");
@@ -37,8 +33,8 @@ public class Program {
 
         Contract contract = new Contract(numeroContrato, dataContrato, valorContrato);
 
-        OnlinePaymentService paymentService = new PaypalService();
-        ContractService contractService = new ContractService(paymentService);
+        //OnlinePaymentService paymentService = new PaypalService();
+        ContractService contractService = new ContractService(new PaypalService());
 
         contractService.processContract(contract, numeroParcelas);
 
@@ -50,7 +46,7 @@ public class Program {
 
         System.out.println("\nParcelas:");
         for (Installment installment : contract.getInstallments()) {
-            System.out.print(installment.getDueDate() + " - " + new DecimalFormat("#.00").format(installment.getAmount()));
+            System.out.println(installment);
         }
 
         scanner.close();

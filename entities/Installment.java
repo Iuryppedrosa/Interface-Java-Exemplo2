@@ -2,6 +2,7 @@ package problema2.entities;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Installment {
     private LocalDate dueDate;
@@ -10,6 +11,7 @@ public class Installment {
     private Contract contract;
 
 
+    private static DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     public Installment(LocalDate dueDate, double amount, Contract contract) {
         this.dueDate = dueDate;
         this.amount = amount;
@@ -38,5 +40,11 @@ public class Installment {
 
     public void setContract(Contract contract) {
         this.contract = contract;
+    }
+
+    @Override
+    public String toString() {
+        return dueDate.format(fmt) + " - " + String
+                .format("%.2f", amount);
     }
 }
